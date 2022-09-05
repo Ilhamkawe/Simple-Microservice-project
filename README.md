@@ -1,6 +1,6 @@
 # [WIP] Simple-Microservice-project
 # TechStack
-Express.js, Gin Gomic, dan MySQL
+Express.js, Gin Gonic, dan MySQL
 # Microservice 
 Merupakan metode khas mengembangkan sistem perangkat lunak yang digunakan berkat skalabilitas,
 metode arsitektur ini dianggap sangat ideal ketika harus mengaktifkan dukungan
