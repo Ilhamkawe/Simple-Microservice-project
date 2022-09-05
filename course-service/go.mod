@@ -1,4 +1,4 @@
-module example.com/m
+module course-service
 
 go 1.17
 
