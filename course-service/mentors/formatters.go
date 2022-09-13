@@ -1,4 +1,4 @@
-package course
+package mentors
 
 import "time"
 
@@ -18,4 +18,14 @@ func FormatCourse(mentor Mentors) CourseFormatter {
 	formatter.Email = mentor.Email
 	formatter.Profile = mentor.Profile
 	return formatter
+}
+
+func FormatMentors(mentors []Mentors) []CourseFormatter {
+	mentorsFormatter := []CourseFormatter{}
+	for _, mentor := range mentors {
+		courseFormatter := FormatCourse(mentor)
+		mentorsFormatter = append(mentorsFormatter, courseFormatter)
+	} 
+
+	return mentorsFormatter
 }
