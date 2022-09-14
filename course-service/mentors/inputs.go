@@ -7,6 +7,7 @@ type CreateInputMentor struct {
 	Profession string `json:"profession" binding:"required"`
 }
 type UpdateInputMentor struct {
+	ID         int    `json:"id" binding:"required"`
 	Name       string `json:"name" binding:"required"`
 	Profile    string `json:"profile" binding:"required"`
 	Email      string `json:"email" binding:"required"`

@@ -110,8 +110,23 @@ func (h *mentorsHandler) Show(c *gin.Context){
 // !======================================================
 
 func (h *mentorsHandler) UpdateMentors(c *gin.Context) {
+	var uri mentors.UpdateMentorURI
+	err := c.ShouldBindUri(&uri)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Invalid Uri", http.StatusUnprocessableEntity, "error", errorMessage)
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
 	var input mentors.UpdateInputMentor 
-	err := c.ShouldBind(&input)
+	input.ID = uri.ID
+
+	err = c.ShouldBind(&input)
 
 	if err != nil {
 		error := helper.FormatValidationError(err)
@@ -119,19 +134,6 @@ func (h *mentorsHandler) UpdateMentors(c *gin.Context) {
 			"error": error,
 		}
 		response := helper.ApiResponse("Invalid input", http.StatusUnprocessableEntity, "error", errorMessage)
-
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
-	var uri mentors.UpdateMentorURI
-	err = c.ShouldBindUri(&uri)
-	if err != nil {
-		error := helper.FormatValidationError(err)
-		errorMessage := gin.H{
-			"error": error,
-		}
-		response := helper.ApiResponse("Invalid Uri", http.StatusUnprocessableEntity, "error", errorMessage)
 
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return

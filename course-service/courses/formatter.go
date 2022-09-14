@@ -40,7 +40,7 @@ type CourseMentorFormatter struct {
 	Name string `json:"name"` 
 	Profile string `json:"profile"`
 }
-func FormatCourses(course Courses) CoursesInputFormatter {
+func FormatCourse(course Courses) CoursesInputFormatter {
 	formatter := CoursesInputFormatter{}
 	formatter.ID = course.ID
 	formatter.Name = course.Name
@@ -78,9 +78,18 @@ func ShowFormatCourses(course Courses) CoursesFormatter {
 	
 	formatter.Mentor = mentorCourse
 
-
 	return formatter
 }
+
+func FormatCourses(course []Courses) []CoursesFormatter {
+	coursesFormatter := []CoursesFormatter{}
+	for _, course := range course {
+		courseFormatter := ShowFormatCourses(course)
+		coursesFormatter = append(coursesFormatter, courseFormatter)
+	}
+	return coursesFormatter
+}
+
 
 // name
 // certificate

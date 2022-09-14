@@ -40,6 +40,9 @@ func main() {
 	api.DELETE("/mentors/:id", mentorHandler.Destroy)
 
 	api.POST("/courses", courseHandler.Create)
+	api.PUT("/courses/:id", courseHandler.Update)
+	api.GET("/courses", courseHandler.Index)
+	api.DELETE("/courses/:id", courseHandler.Destroy)
 
 	router.Run(":3002")
 
