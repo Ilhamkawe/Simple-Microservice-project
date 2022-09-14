@@ -1,5 +1,5 @@
 # [WIP] Simple-Microservice-project
-Project ini adalah modifikasi dari project class build with angga, dimana class ini mempelajarin tentang cara membuat website  online class dengan mengimplementasikan arsitektur microservices 
+Project ini adalah modifikasi dari project class build with angga, dimana class ini mempelajari cara membuat website online class dengan mengimplementasikan arsitektur microservices 
 # Teknologi
 Express.js, Gin Gonic, dan MySQL
 # Microservice 
