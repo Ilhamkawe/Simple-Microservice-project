@@ -1,5 +1,6 @@
 # [WIP] Simple-Microservice-project
-# TechStack
+Project ini adalah modifikasi dari project class build with angga, dimana class ini mempelajarin tentang cara membuat website  online class dengan mengimplementasikan arsitektur microservices 
+# Teknologi
 Express.js, Gin Gonic, dan MySQL
 # Microservice 
 Merupakan metode khas mengembangkan sistem perangkat lunak yang digunakan berkat skalabilitas,
