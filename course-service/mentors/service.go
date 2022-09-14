@@ -34,7 +34,7 @@ func (s *service) FindMentorByID(id int) (Mentors, error) {
 	if err != nil {
 		return mentor, err
 	}
-	return mentor, err
+	return mentor, nil
 }
 
 // ambil semua data mentor
