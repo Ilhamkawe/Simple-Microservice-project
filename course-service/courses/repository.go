@@ -15,6 +15,11 @@ type repository struct {
 	db *gorm.DB
 }
 
+func NewRepository(db *gorm.DB) *repository {
+	return &repository{db}
+}
+
+
 func (r *repository) Destroy(id int)(bool, error){
 	err := r.db.Delete(&Courses{}, id).Error
 	if err != nil { 
@@ -23,9 +28,6 @@ func (r *repository) Destroy(id int)(bool, error){
 	return true, nil
 }
 
-func NewRepository(db *gorm.DB) *repository {
-	return &repository{db}
-}
 
 func (r *repository) Create(course Courses)(Courses, error) {
 	err := r.db.Create(&course).Error

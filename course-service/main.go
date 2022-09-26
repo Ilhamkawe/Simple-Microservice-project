@@ -1,6 +1,7 @@
 package main
 
 import (
+	"course-service/chapters"
 	"course-service/courses"
 	"course-service/handler"
 	"course-service/mentors"
@@ -29,6 +30,11 @@ func main() {
 	courseService := courses.NewService(courseRepository)
 	courseHandler := handler.NewCourseHandler(courseService, mentorService)
 
+	chapterRepository := chapters.NewRepository(db)
+	chapterService := chapters.NewService(chapterRepository)
+	chapterHandler := handler.NewChapterHandler(chapterService, courseService)
+
+
 	router := gin.Default()
 
 	api := router.Group("/api/v1")
@@ -43,6 +49,12 @@ func main() {
 	api.PUT("/courses/:id", courseHandler.Update)
 	api.GET("/courses", courseHandler.Index)
 	api.DELETE("/courses/:id", courseHandler.Destroy)
+
+	api.POST("/chapters", chapterHandler.Create)
+	api.GET("/chapters", chapterHandler.GetChapters)
+	api.GET("/chapters/:id", chapterHandler.GetDetail)
+	api.DELETE("/chapters/:id", chapterHandler.Destroy)
+	api.PUT("/chapters/:id", chapterHandler.Update)
 
 	router.Run(":3002")
 
