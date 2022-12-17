@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
 
     const schema = {
         email : "email|empty:false",
-        password : "email|empty:false"
+        password : "string|empty:false"
     }
 
     const check = v.validate(req.body, schema)
