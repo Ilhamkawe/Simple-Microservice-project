@@ -85,12 +85,12 @@ func (s *service) Update(input UpdateInputCourse) (Courses, error) {
 	course.Description = input.Description
 	course.MentorID = input.MentorID
 
-	newCoruse, err := s.repository.Update(course)
+	newCourse, err := s.repository.Update(course)
 	if err != nil {
-		return newCoruse, err
+		return newCourse, err
 	}
 
-	return newCoruse, nil
+	return newCourse, nil
 }
 
 func (s *service) FilterCourse(name string, type_ string) ([]Courses, error) {

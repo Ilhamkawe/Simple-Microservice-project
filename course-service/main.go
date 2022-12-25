@@ -5,6 +5,7 @@ import (
 	"course-service/courses"
 	"course-service/handler"
 	"course-service/images"
+	"course-service/lessons"
 	"course-service/mentors"
 	"log"
 
@@ -41,9 +42,9 @@ func main() {
 	chapterService := chapters.NewService(chapterRepository)
 	chapterHandler := handler.NewChapterHandler(chapterService, courseService)
 
-	// lessonRepository := lessons.NewRepository(db)
-	// lessonService := lessons.NewService(lessonRepository)
-	// lessonHandler := handler.NewLessonHandler(lessonService, chapterService)
+	lessonRepository := lessons.NewRepository(db)
+	lessonService := lessons.NewService(lessonRepository)
+	lessonHandler := handler.NewLessonHandler(lessonService, chapterService)
 
 	imageRepository := images.NewRepository(db)
 	imageService := images.NewService(imageRepository)
@@ -70,13 +71,15 @@ func main() {
 	api.DELETE("/chapters/:id", chapterHandler.Destroy)
 	api.PUT("/chapters/:id", chapterHandler.Update)
 
-	// api.POST("/lessons", lessonHandler.Create)
-	// api.PUT("/lessons/:id", lessonHandler.Update)
-	// api.GET("/lessons/:id", lessonHandler.Index)
-	// api.DELETE("/lessons/:id", lessonHandler.Destroy)
+	api.POST("/lessons", lessonHandler.Create)
+	api.PUT("/lessons/:id", lessonHandler.Update)
+	api.GET("/lessons/:id", lessonHandler.Index)
+	api.DELETE("/lessons/:id", lessonHandler.Destroy)
 
 	api.POST("/course/image", imageHandler.Create)
 	api.DELETE("/course/image/:id", imageHandler.Destroy)
+
+	
 
 	router.Run(":3002")
 

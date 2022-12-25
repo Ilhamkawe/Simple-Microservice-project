@@ -4,6 +4,7 @@ import (
 	"course-service/chapters"
 	"course-service/courses"
 	"course-service/helper"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -185,6 +186,8 @@ func (h* chapterHandler) GetDetail(c *gin.Context){
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+
+	fmt.Println(chapter)
 
 	response := helper.ApiResponse("Success Get Chapter", http.StatusOK, "Success", chapters.FormatShowChapters(chapter))
 	c.JSON(http.StatusOK, response)

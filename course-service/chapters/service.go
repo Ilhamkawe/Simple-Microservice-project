@@ -61,7 +61,7 @@ func (s *service) Update(input UpdateInputChapters) (Chapters, error) {
 	chapter.Name = input.Name
 	chapter.CourseID = input.CourseID
 
-	newChapters, err := s.repository.Create(chapter)
+	newChapters, err := s.repository.Update(chapter)
 
 	if err != nil {
 		return newChapters, err

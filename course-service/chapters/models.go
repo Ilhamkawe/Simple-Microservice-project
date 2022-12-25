@@ -6,10 +6,10 @@ import (
 )
 
 type Chapters struct {
-	ID       int
-	Name     string
-	CourseID int
-	Course   courses.Courses 
-	CreatedAt time.Time
-	UpdatedAt time.Time 
+	ID       int 
+	Name     string 
+	CourseID int 
+	Course   courses.Courses  
+	CreatedAt time.Time 
+	UpdatedAt time.Time  
 }

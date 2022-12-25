@@ -45,7 +45,7 @@ func (h* lessonsHandler) Index(c *gin.Context){
 
 	}
 
-	lessons, err := h.lessonService.GetAll()
+	allLessons, err := h.lessonService.GetAll()
 	if err != nil {
 		error := helper.FormatValidationError(err)
 		errorMessage := gin.H{
@@ -56,7 +56,7 @@ func (h* lessonsHandler) Index(c *gin.Context){
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	response := helper.ApiResponse("success get data", http.StatusOK, "success", lessons)
+	response := helper.ApiResponse("success get data", http.StatusOK, "success", lessons.FormatLessons(allLessons))
 	c.JSON(http.StatusOK, response)
 
 }
@@ -100,7 +100,7 @@ func (h *lessonsHandler) Create(c *gin.Context){
 		return
 	}
 
-	lessons, err := h.lessonService.Create(input)
+	newLessons, err := h.lessonService.Create(input)
 	if err != nil {
 		error := helper.FormatValidationError(err)
 		errorMessage := gin.H{
@@ -112,7 +112,7 @@ func (h *lessonsHandler) Create(c *gin.Context){
 		return
 	}
 
-	response := helper.ApiResponse("Success Input Course", http.StatusOK, "Success", lessons)
+	response := helper.ApiResponse("Success Input Course", http.StatusOK, "Success", lessons.FormatLesson(newLessons))
 	c.JSON(http.StatusOK, response)
 }
 
@@ -211,7 +211,7 @@ func (h *lessonsHandler) Update(c *gin.Context){
 		return
 	}
 
-	response := helper.ApiResponse("Success Update Lesson", http.StatusOK, "Success", newLesson)
+	response := helper.ApiResponse("Success Update Lesson", http.StatusOK, "Success", lessons.FormatLesson(newLesson))
 	c.JSON(http.StatusOK, response)
 }
 

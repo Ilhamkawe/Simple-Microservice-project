@@ -8,6 +8,7 @@ type Repository interface {
 	FindByID(id int) (Chapters, error)
 	Index() ([]Chapters, error)
 	Destroy(id int) (bool, error)
+	Update(chapter Chapters) (Chapters, error)
 }
 
 type repository struct {
