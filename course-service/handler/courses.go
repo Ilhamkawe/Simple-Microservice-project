@@ -4,7 +4,6 @@ import (
 	"course-service/courses"
 	"course-service/helper"
 	"course-service/mentors"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -85,14 +84,6 @@ func (h *coursesHandler) Index(c *gin.Context){
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-
-	user, err := helper.GetUserByID(1)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	
-	fmt.Println(user)
 
 	response := helper.ApiResponse("success get data", http.StatusOK, "success", courses.FormatCourses(course))
 	c.JSON(http.StatusOK, response)

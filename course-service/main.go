@@ -7,6 +7,7 @@ import (
 	"course-service/images"
 	"course-service/lessons"
 	"course-service/mentors"
+	mycourse "course-service/mycourses"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -50,36 +51,49 @@ func main() {
 	imageService := images.NewService(imageRepository)
 	imageHandler := handler.NewImageHandler(courseService,imageService) 
 
+	myCourseRepository := mycourse.NewRepository(db)
+	myCourseService := mycourse.NewService(myCourseRepository)
+	myCourseHandler := handler.NewMyCoursesHandler(myCourseService, courseService)
+
 	router := gin.Default()
 
 	api := router.Group("/api/v1")
 
+	// mentors
 	api.POST("/mentors", mentorHandler.CreateMentors)
 	api.PUT("/mentors/:id", mentorHandler.UpdateMentors)
 	api.GET("/mentors", mentorHandler.Index)
 	api.GET("/mentors/:id", mentorHandler.Show)
 	api.DELETE("/mentors/:id", mentorHandler.Destroy)
 
+	// courses
 	api.POST("/courses", courseHandler.Create)
 	api.PUT("/courses/:id", courseHandler.Update)
 	api.GET("/courses", courseHandler.Index)
 	api.DELETE("/courses/:id", courseHandler.Destroy)
 
+	// chapters
 	api.POST("/chapters", chapterHandler.Create)
 	api.GET("/chapters", chapterHandler.GetChapters)
 	api.GET("/chapters/:id", chapterHandler.GetDetail)
 	api.DELETE("/chapters/:id", chapterHandler.Destroy)
 	api.PUT("/chapters/:id", chapterHandler.Update)
 
+	// lessons
 	api.POST("/lessons", lessonHandler.Create)
 	api.PUT("/lessons/:id", lessonHandler.Update)
 	api.GET("/lessons/:id", lessonHandler.Index)
 	api.DELETE("/lessons/:id", lessonHandler.Destroy)
 
+	// course image
 	api.POST("/course/image", imageHandler.Create)
 	api.DELETE("/course/image/:id", imageHandler.Destroy)
 
-	
+	// mycourses
+	api.GET("/mycourses", myCourseHandler.Index)
+	api.POST("/mycourses", myCourseHandler.Create)
+
+	// riviewss
 
 	router.Run(":3002")
 

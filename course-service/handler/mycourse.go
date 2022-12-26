@@ -5,6 +5,7 @@ import (
 	"course-service/helper"
 	mycourse "course-service/mycourses"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,7 +60,7 @@ func (h *mycoursesHandler) Create(c *gin.Context) {
 		errorMessage := gin.H{
 			"error": error,
 		}
-		response := helper.ApiResponse("Error When Check Email", http.StatusBadRequest, "error", errorMessage)
+		response := helper.ApiResponse("Error When Input Data", http.StatusBadRequest, "error", errorMessage)
 
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -67,6 +68,49 @@ func (h *mycoursesHandler) Create(c *gin.Context) {
 
 	response := helper.ApiResponse("Success Input ", http.StatusOK, "Success", newMycourse)
 	c.JSON(http.StatusOK, response)
+}
 
+func (h *mycoursesHandler) Index(c *gin.Context){
+	user_id, err := strconv.Atoi(c.Query("user_id"))
 
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error when Getting Params", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	if user_id != 0 {
+		myCourse, err := h.MyCoursesService.FindByUserID(user_id)
+
+		if err != nil {
+			
+			response := helper.ApiResponse("Error when fetching data", http.StatusBadRequest, "error", err)
+	
+			c.JSON(http.StatusBadRequest, response)
+			return
+		}
+		response := helper.ApiResponse("success get data", http.StatusOK, "success", myCourse)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	myCourse, err := h.MyCoursesService.GetAll()
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error when fetching data", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := helper.ApiResponse("success get data", http.StatusOK, "success", myCourse)
+	c.JSON(http.StatusOK, response)
+	
 }
