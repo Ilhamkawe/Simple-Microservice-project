@@ -41,7 +41,7 @@ func (h *mycoursesHandler) Create(c *gin.Context) {
 		errorMessage := gin.H{
 			"error": error,
 		}
-		response := helper.ApiResponse("Error When Check Email", http.StatusBadRequest, "error", errorMessage)
+		response := helper.ApiResponse("Error When Check Course", http.StatusBadRequest, "error", errorMessage)
 
 		c.JSON(http.StatusBadRequest, response)
 		return
