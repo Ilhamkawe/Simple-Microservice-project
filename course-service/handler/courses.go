@@ -51,6 +51,36 @@ func (h *coursesHandler) Destroy(c *gin.Context){
 	c.JSON(http.StatusOK, response)
 
 }
+// !======================================================
+func (h *coursesHandler) Detail(c *gin.Context) {
+	var uri courses.InputUriID 
+	err := c.ShouldBindUri(&uri)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Invalid Uri", http.StatusUnprocessableEntity, "error", errorMessage)
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	course, err := h.courseService.FindCourseByID(uri.ID)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error when fetching data", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.ApiResponse("success get data", http.StatusOK, "success", courses.DetailFormatCourses(course))
+	c.JSON(http.StatusOK, response)
+}
 
 // !======================================================
 func (h *coursesHandler) Index(c *gin.Context){

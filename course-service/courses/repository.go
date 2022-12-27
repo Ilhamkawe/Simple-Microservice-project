@@ -41,7 +41,7 @@ func (r *repository) Create(course Courses)(Courses, error) {
 
 func (r *repository) FindCourseByID(id int) (Courses, error){
 	var course Courses
-	err := r.db.Where("id = ?", id).Find(&course).Error
+	err := r.db.Where("id = ?", id).Preload("Mentor").Preload("Chapters.Lessons").Find(&course).Error
 
 	if err != nil {
 		return course, err

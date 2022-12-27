@@ -74,6 +74,7 @@ func main() {
 	// courses
 	api.POST("/courses", courseHandler.Create)
 	api.PUT("/courses/:id", courseHandler.Update)
+	api.GET("/courses/:id", courseHandler.Detail)
 	api.GET("/courses", courseHandler.Index)
 	api.DELETE("/courses/:id", courseHandler.Destroy)
 
