@@ -66,26 +66,29 @@ func (h *mycoursesHandler) Create(c *gin.Context) {
 		return
 	}
 
-	response := helper.ApiResponse("Success Input ", http.StatusOK, "Success", newMycourse)
+	response := helper.ApiResponse("Success Input ", http.StatusOK, "Success", mycourse.FormatMyCourse(newMycourse))
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *mycoursesHandler) Index(c *gin.Context){
-	user_id, err := strconv.Atoi(c.Query("user_id"))
+	user_id := c.Query("user_id")
 
-	if err != nil {
-		error := helper.FormatValidationError(err)
-		errorMessage := gin.H{
-			"error": error,
+
+	if user_id != "" {
+		
+		u_id, err := strconv.Atoi(user_id)
+		if err != nil {
+			error := helper.FormatValidationError(err)
+			errorMessage := gin.H{
+				"error": error,
+			}
+			response := helper.ApiResponse("Error when Getting Params", http.StatusBadRequest, "error", errorMessage)
+	
+			c.JSON(http.StatusBadRequest, response)
+			return
 		}
-		response := helper.ApiResponse("Error when Getting Params", http.StatusBadRequest, "error", errorMessage)
 
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
-
-	if user_id != 0 {
-		myCourse, err := h.MyCoursesService.FindByUserID(user_id)
+		myCourse, err := h.MyCoursesService.FindByUserID(u_id)
 
 		if err != nil {
 			
@@ -110,7 +113,7 @@ func (h *mycoursesHandler) Index(c *gin.Context){
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	response := helper.ApiResponse("success get data", http.StatusOK, "success", myCourse)
+	response := helper.ApiResponse("success get data", http.StatusOK, "success", mycourse.FormatMyCourses(myCourse))
 	c.JSON(http.StatusOK, response)
 	
 }
