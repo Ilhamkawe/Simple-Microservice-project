@@ -8,6 +8,7 @@ import (
 	"course-service/lessons"
 	"course-service/mentors"
 	mycourse "course-service/mycourses"
+	"course-service/riviews"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -55,6 +56,10 @@ func main() {
 	myCourseService := mycourse.NewService(myCourseRepository)
 	myCourseHandler := handler.NewMyCoursesHandler(myCourseService, courseService)
 
+	riviewRepository := riviews.NewRepository(db)
+	riviewService := riviews.NewService(riviewRepository)
+	riviewHandler := handler.NewRiviewsHandler(riviewService, courseService)
+
 	router := gin.Default()
 
 	api := router.Group("/api/v1")
@@ -94,7 +99,9 @@ func main() {
 	api.POST("/mycourses", myCourseHandler.Create)
 
 	// riviewss
-	
+	api.POST("/riviews", riviewHandler.Create)
+	api.DELETE("/riviews/:id", riviewHandler.Destroy)
+	api.PUT("/riviews/:id", riviewHandler.Destroy)
 
 	router.Run(":3002")
 

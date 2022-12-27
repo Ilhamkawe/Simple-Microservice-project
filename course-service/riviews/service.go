@@ -5,6 +5,7 @@ type Service interface {
 	IsRiviewAvailable(user_id int, course_id int) (bool, error)
 	Update(input UpdateInputRiview) (Riviews, error)
 	Destroy(id int) (bool, error)
+	GetByID(id int) (Riviews, error)
 }
 
 type service struct {
@@ -72,4 +73,15 @@ func (s *service) Destroy(id int) (bool, error) {
 	}
 
 	return true, nil
+}
+
+// mengambil data riview
+func (s *service) GetByID(id int) (Riviews, error) {
+	riview, err := s.repository.GetByID(id)
+
+	if err != nil {
+		return riview, err
+	}
+
+	return riview, nil
 }

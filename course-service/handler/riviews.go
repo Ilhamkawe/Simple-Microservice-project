@@ -83,7 +83,109 @@ func (h *RiviewsHandler) Create(c *gin.Context) {
 		return
 	}
 
-	response := helper.ApiResponse("Success Input ", http.StatusOK, "Success", newRiview)
+	response := helper.ApiResponse("Success Input ", http.StatusOK, "Success", riviews.FormatRiview(newRiview))
+	c.JSON(http.StatusOK, response)
+
+}
+
+func (h *RiviewsHandler) Destroy(c *gin.Context) {
+	var uri riviews.UriID
+
+	err := c.ShouldBindUri(&uri)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Invalid Uri", http.StatusUnprocessableEntity, "error", errorMessage)
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	riview, err := h.RiviewService.Destroy(uri.ID)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error When Delete Data", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.ApiResponse("Success Delete Data", http.StatusOK, "success", riview)
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *RiviewsHandler) Update(c *gin.Context) {
+	var uri riviews.UriID
+
+	err := c.ShouldBindUri(&uri)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Invalid Uri", http.StatusUnprocessableEntity, "error", errorMessage)
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	var input riviews.UpdateInputRiview 
+	input.ID = uri.ID
+	err = c.ShouldBind(&input)
+
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Invalid input", http.StatusUnprocessableEntity, "error", errorMessage)
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	riview, err := h.RiviewService.GetByID(uri.ID) 
+
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error When Fetching Data", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	if riview.ID == 0 {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Riview Not Found", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	newRiview, err := h.RiviewService.Update(input)
+	if err != nil {
+		error := helper.FormatValidationError(err)
+		errorMessage := gin.H{
+			"error": error,
+		}
+		response := helper.ApiResponse("Error WHen Update Data", http.StatusBadRequest, "error", errorMessage)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.ApiResponse("Success Delete Data", http.StatusOK, "success", riviews.FormatRiview(newRiview))
 	c.JSON(http.StatusOK, response)
 
 }

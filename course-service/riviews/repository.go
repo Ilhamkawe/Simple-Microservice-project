@@ -7,6 +7,7 @@ type Repository interface {
 	FindByUserAndCourseID(course_id int, user_id int) (Riviews, error)
 	Update(riview Riviews) (Riviews, error)
 	Destroy(id int) (bool, error)
+	GetByID(id int) (Riviews, error)
 }
 
 type repository struct {
@@ -57,4 +58,15 @@ func (r *repository) Destroy(id int) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (r *repository) GetByID(id int) (Riviews, error) {
+	var riview Riviews
+	err := r.db.Where("id = ?", id).Find(&riview).Error
+
+	if err != nil {
+		return riview, err
+	}
+
+	return riview, nil
 }

@@ -12,6 +12,7 @@ type UriID struct {
 }
 
 type UpdateInputRiview struct {
+	ID     int    `json:"id" binding:"required"`
 	Rating int    `json:"rating" binding:"required"`
 	Note   string `json:"note" binding:"required"`
 }
