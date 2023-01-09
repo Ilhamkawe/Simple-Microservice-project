@@ -9,7 +9,7 @@ untuk berbagai perangkat lunak dan perangkat-mencakup web, mobile, Internet
 Of things, cloud service
 
 <p align="center">
-  <img src="https://i.ibb.co/qxD6v54/A4-1.png" alt="A4-1" border="0" />
+  <img src="https://i.ibb.co/F4jjTsg/microservice-diagram.jpg" alt="A4-1" border="0" />
 </p>
 
  
