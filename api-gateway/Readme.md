@@ -52,7 +52,18 @@ you have to install node.js and golang on your machine to run this project. the 
 ### Installation
 
 1. Download and Install Node.JS at [https://nodejs.org](https://nodejs.org/en/download/)
-
+3. Setup service url 
+   ```sh
+   URL_SERVICE_MEDIA = "http://localhost:3000"
+   URL_SERVICE_USERS = "http://localhost:3001"
+   URL_SERVICE_COURSE = "http://localhost:3002"
+   URL_SERVICE_TRANSACTION = "http://localhost:3003"
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   npm run start
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
