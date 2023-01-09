@@ -11,6 +11,7 @@ import (
 	"course-service/riviews"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -61,6 +62,14 @@ func main() {
 	riviewHandler := handler.NewRiviewsHandler(riviewService, courseService)
 
 	router := gin.Default()
+
+	router.Use(cors.Default())
+	router.Use(cors.New(
+		cors.Config{
+			AllowOrigins: []string{"*"},
+			AllowMethods: []string{"POST", "GET", "PATCH", "DELETE", "HEAD"},
+			AllowHeaders: []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
+		}))
 
 	api := router.Group("/api/v1")
 
