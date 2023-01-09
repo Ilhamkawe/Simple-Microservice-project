@@ -24,7 +24,7 @@
   <img src="https://i.ibb.co/vxbSY2m/api-gateway.jpg" alt="A4-1" border="0" />
 </p>
 
-on this api gateway there is a process that will run. after the client accesses the api gateway, it will hit the specified endpoint/route. then the system will check whether the controller at the endpoint must go through the `middleware` or not.
+on this api gateway there is a process that will run. after the client accesses the api gateway, it will hit the specified endpoint/route. then the system will check whether the controller at the endpoint must go through the `middleware` or not. after checking the program will access the `service` intended by the controller.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
